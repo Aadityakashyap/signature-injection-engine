@@ -27,8 +27,7 @@ A full-stack Next.js prototype to place fields on a PDF responsively, then burn-
    ```
 3. Configure environment:
    ```bash
-   cp .env.example .env
-   # Edit .env as needed
+   cp .env.local .env
    ```
 4. Run the app:
 
