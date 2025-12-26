@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0b0f14;
+  --color-card: #111827;
+  --color-border: #1f2937;
+  --color-primary: #60a5fa;
+  --color-accent: #34d399;
+  --color-text: #e5e7eb;
+  --radius: 16px;
+  --blur: 24px;
+
+  --color-text-light: #e5e7eb;
+  --color-tag: #656565;
+  --color-main-accent: #001433;
+  --color-main-accent-text: #8796af;
+  --color-green: #64ed80;
+  --color-blue-over: #1559ed;
+  --color-logo: #1f89e8;
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-neutral-900 text-neutral-200;
+}
+
+.glass {
+  background: color-mix(in oklab, var(--color-card) 70%, transparent);
+  backdrop-filter: blur(var(--blur)) saturate(1.1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.field-box {
+  @apply absolute border border-dashed border-neutral-400 rounded-sm bg-white/10 text-neutral-100;
+}
+
+.field-label {
+  @apply text-xs px-1 py-0.5 bg-neutral-800/70 border border-neutral-700 rounded-sm;
+}
+
+/* Resize handles */
+.handle {
+  @apply absolute w-2 h-2 bg-primary rounded-full;
+}
+.handle.br {
+  right: -4px;
+  bottom: -4px;
+}
+.handle.bl {
+  left: -4px;
+  bottom: -4px;
+}
+.handle.tr {
+  right: -4px;
+  top: -4px;
+}
+.handle.tl {
+  left: -4px;
+  top: -4px;
+}
+
+.Blob {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  color: transparent;
+}
+
+.pink {
+  border-radius: 1834px;
+  background: radial-gradient(50% 50% at 50% 50%, #d43f8c33, #0000);
+}
+
+.purple {
+  border-radius: 1908px;
+  background: radial-gradient(50% 50% at 50% 50%, #4f46e533, #0000);
+}
