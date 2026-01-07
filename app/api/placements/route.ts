@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { DocumentModel } from "@/models/Document";
 import { Placement } from "@/models/Placement";
-import { ensureDirs } from "@/lib/storage";
+import { ensureDirs, publicUrlFor } from "@/lib/storage";
 
 export const GET = async (req: NextRequest) => {
   await connectDB();
@@ -11,17 +11,10 @@ export const GET = async (req: NextRequest) => {
   const docId = searchParams.get("docId")!;
   const doc = await DocumentModel.findOne({ docId });
   if (!doc) {
-    if (docId === "sample") {
-      const fileUrl = "/sample.pdf";
-      return NextResponse.json({
-        meta: { fileUrl, pageCount: 1, docId },
-        boxes: [],
-      });
-    }
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
   const boxes = await Placement.find({ docId });
-  const fileUrl = `/api/file?path=${encodeURIComponent(doc.filePath)}`;
+  const fileUrl = await publicUrlFor(doc.filePath);
   return NextResponse.json({
     meta: { fileUrl, pageCount: doc.pageCount ?? 1, docId },
     boxes,

@@ -9,6 +9,7 @@ const Home: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [docId, setDocId] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [signedData, setSignedData] = useState<any[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleImageClick = () => {
@@ -40,18 +41,22 @@ const Home: React.FC = () => {
     }
   };
 
+  const viewSignedFile = async (docId: string) => {};
+
+  const deleteSignedFile = async (docId: string) => {};
+
   return (
     <>
       <Header />
       <section className="w-full px-8 py-6 flex flex-col items-center flex-wrap justify-between gap-12">
-        <div className="Blob purple fixed left-0 top-0 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-477 h-433.75 shrink-0" />
-        <div className="Blob pink fixed right-0 top-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-458.5 h-449.75 shrink-0" />
+        <div className="Blob purple" />
+        <div className="Blob pink" />
         <div className="w-full flex flex-col items-center justify-center">
-          <div className="w-full h-36 rounded-xl flex flex-col items-center justify-center text-center bg-[url('/home-banner.png')] bg-cover bg-[#13151b40] backdrop-blur-[20px] select-none">
+          <div className="banner">
             <div className="text-white text-xl font-bold leading-[1.38] mb-2">
               Signature Injection Engine
             </div>
-            <div className="text-[16px] text-gray-200">
+            <div className="text-[16px] text-light">
               Upload a PDF and place fields responsively. Then burn-in
               signatures with audit trail.
             </div>
@@ -60,7 +65,7 @@ const Home: React.FC = () => {
 
         <div className="w-full space-y-6">
           <div
-            className="relative w-full border border-[#212433] rounded-[10px] flex flex-col items-center justify-center text-center select-none"
+            className="relative w-full border border-border rounded-xl flex flex-col items-center justify-center text-center select-none"
             onClick={handleImageClick}
           >
             <Image
@@ -71,7 +76,7 @@ const Home: React.FC = () => {
               height={300}
             />
             <div className="absolute bottom-10 flex flex-col items-center justify-center gap-4">
-              <div className="text-xl font-semibold text-[#c82c7d]">
+              <div className="text-xl font-semibold text-btn-over">
                 {file
                   ? `File Name: ${file.name}`
                   : "No file. Choose file first."}
@@ -81,19 +86,19 @@ const Home: React.FC = () => {
 
           <div className="flex flex-col items-center justify-end gap-4 w-full">
             {docId ? (
-              <div className="text-[#b1b5c9] text-base grid w-full grid-cols-3 gap-4">
+              <div className="text-light text-base grid w-full grid-cols-3 gap-4">
                 <p className="flex h-10 w-full items-center justify-center gap-2 text-sm font-medium transition text-green col-start-1">
                   {file && file.name} Uploaded Successfully!
                 </p>
                 <a
-                  className="flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-green/80 bg-green/90 text-sm font-medium text-white transition hover:bg-green col-start-3"
+                  className="flex h-10 w-full items-center justify-center gap-2 btn-full-success col-start-3"
                   href={`/editor/${docId}`}
                 >
                   Open Editor for Uploaded PDF
                 </a>
               </div>
             ) : (
-              <div className="text-[#b1b5c9] text-base grid w-full grid-cols-3 gap-4">
+              <div className="text-light text-base grid w-full grid-cols-3 gap-4">
                 <input
                   type="file"
                   accept="application/pdf"
@@ -104,13 +109,79 @@ const Home: React.FC = () => {
                   className="hidden"
                 />
                 <button
-                  className="flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-[#e179af] bg-[#da589b] text-sm font-medium text-white transition hover:bg-[#c82c7d] col-start-3"
+                  className="flex h-10 w-full items-center justify-center gap-2 col-start-3 btn-full"
                   onClick={upload}
                 >
                   {loading ? "Uploading..." : "Upload File"}
                 </button>
               </div>
             )}
+          </div>
+        </div>
+        <div className="w-full space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 md:my-6">
+            <div className="md:col-span-2">
+              <div className="p-6 rounded-(--radius) shadow-md shadow-border/20 border border-border">
+                <div className="flex items-center justify-between">
+                  <h5 className="text-lg">Recent Documents</h5>
+                </div>
+                <div className="overflow-x-auto p-0 rounded-[calc(var(--radius)/2)] mt-3">
+                  <table className="min-w-full">
+                    <thead>
+                      <tr className="text-left">
+                        <th className="py-3 px-4 text-light font-medium text-sm">
+                          ID
+                        </th>
+                        <th className="py-3 px-4 text-light font-medium text-sm">
+                          File Name
+                        </th>
+                        <th className="py-3 px-4 text-light font-medium text-sm">
+                          Status
+                        </th>
+                        <th className="py-3 px-4 text-light font-medium text-sm hidden md:table-cell">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {signedData?.map((item, id) => (
+                        <tr key={`${id}`} className="border-t border-gray-200">
+                          <td className="my-3 mx-4 line-clamp-1 overflow-hidden">
+                            {id + 1}
+                          </td>
+                          <td className="py-4 px-4">
+                            <span className="px-2 py-1 rounded inline-block">
+                              File Name
+                            </span>
+                          </td>
+                          <td className="py-4 px-4">
+                            <span className="px-2 py-1 rounded inline-block">
+                              View File
+                            </span>
+                          </td>
+                          <td className="py-4 px-4 text-nowrap hidden md:table-cell">
+                            <span className="w-full flex gap-2">
+                              <button
+                                className="flex h-10 w-full items-center justify-center gap-2 btn-full-success col-start-3"
+                                onClick={() => viewSignedFile(item.docId)}
+                              >
+                                View
+                              </button>
+                              <button
+                                className="flex h-10 w-full items-center justify-center gap-2 border-border bg-border hover:bg-border col-start-3 btn-full"
+                                onClick={() => deleteSignedFile(item.docId)}
+                              >
+                                Delete
+                              </button>
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

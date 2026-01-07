@@ -106,35 +106,29 @@ const PdfEditor = ({ docId }: { docId: string }) => {
     <div className="grid grid-cols-[220px_1fr] gap-4 h-full">
       <FieldPalette />
       <div className="flex flex-col gap-3">
-        <nav className="flex items-center gap-2 text-center backdrop-blur-[18px] bg-[#0e101566] transition-all duration-300 w-full px-4 py-2">
+        <nav className="flex items-center gap-2 text-center backdrop-blur-(--blur) bg-aaccent transition-all duration-300 w-full px-4 py-2">
           <button
-            className="rounded-lg border border-[#e179af] bg-[#da589b] text-sm font-medium text-white transition hover:bg-[#c82c7d] px-4 py-2"
+            className="btn-full"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
           >
             Prev
           </button>
 
-          <span className="rounded-lg border border-[#e179af] text-sm font-medium text-white transition px-4 py-2">
+          <span className="rounded-[calc(var(--radius)/2)] border border-btn-border text-sm font-medium text-white transition px-4 py-2">
             Page {page} / {meta.pageCount}
           </span>
 
           <button
-            className="rounded-lg border border-[#e179af] bg-[#da589b] text-sm font-medium text-white transition hover:bg-[#c82c7d] px-4 py-2"
+            className="btn-full"
             onClick={() => setPage((p) => Math.min(meta.pageCount, p + 1))}
           >
             Next
           </button>
 
-          <button
-            className="rounded-lg border border-[#e179af] bg-[#da589b] text-sm font-medium text-white transition hover:bg-[#c82c7d] px-4 py-2 ml-auto"
-            onClick={onSavePlacements}
-          >
+          <button className="btn-full ml-auto" onClick={onSavePlacements}>
             Save placements
           </button>
-          <button
-            className="rounded-lg border border-[#e179af] bg-[#da589b] text-sm font-medium text-white transition hover:bg-[#c82c7d] px-4 py-2"
-            onClick={() => setSigOpen(true)}
-          >
+          <button className="btn-full" onClick={() => setSigOpen(true)}>
             Signature
           </button>
         </nav>

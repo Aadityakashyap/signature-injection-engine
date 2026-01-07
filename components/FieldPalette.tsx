@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 export type FieldType = "text" | "signature" | "image" | "date" | "radio";
@@ -19,23 +20,23 @@ const Sidebar = () => {
   };
 
   return (
-    <aside
-      className={`flex h-full flex-col justify-between select-none text-center backdrop-blur-[18px] bg-[#0e101566] px-4 md:py-6 transition-all duration-300 w-full md:w-56 py-6 overflow-hidden md:overflow-visible`}
-    >
+    <aside className="sidebar">
       <div className="md:max-h-[70vh] h-full">
         <div className="flex items-center justify-between">
           <div className="cursor-pointer text-white">
             <div className="flex items-center gap-1">
-              <Image
-                src="/logo.svg"
-                alt="Signature Injection Engine"
-                className="w-auto h-7"
-                width={30}
-                height={30}
-              />
-              <span className="font-bold text-xl">
+              <Link href="/" className="block">
+                <Image
+                  src="/logo.svg"
+                  alt="Signature Injection Engine"
+                  className="w-auto h-7"
+                  width={30}
+                  height={30}
+                />
+              </Link>
+              <Link href="/" className="font-bold text-xl">
                 Signature Injection Engine
-              </span>
+              </Link>
             </div>
           </div>
         </div>
@@ -67,7 +68,7 @@ const Fields: React.FC<FieldsProps> = ({ label, onDragStart }) => {
   return (
     <div className="mt-6 flex w-full flex-col gap-2">
       <button
-        className="flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-[#e179af] text-sm font-medium text-white transition hover:border-white"
+        className="flex h-10 w-full items-center justify-center gap-2 rounded-[calc(var(--radius)/2)] border border-btn-border text-sm font-medium text-white transition hover:border-white"
         draggable={true}
         onDragStart={onDragStart}
       >

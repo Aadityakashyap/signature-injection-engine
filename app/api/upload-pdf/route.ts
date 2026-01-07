@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { DocumentModel } from "@/models/Document";
-import { ensureDirs, pdfPath } from "@/lib/storage";
-import { sha256File } from "@/lib/hash";
-import fs from "fs/promises";
+import { ensureDirs, pdfPath, saveOriginalPdf } from "@/lib/storage";
+import { sha256Buffer, sha256File } from "@/lib/hash";
 
 export const POST = async (req: NextRequest) => {
   await connectDB();
@@ -12,22 +11,27 @@ export const POST = async (req: NextRequest) => {
   const formData = await req.formData();
   const file = formData.get("pdf") as File | null;
 
-  let buf: Buffer;
-  let fileName = "uploaded.pdf";
-  let docId: string;
-
-  if (file) {
-    buf = Buffer.from(await file.arrayBuffer());
-    fileName = file.name;
-    docId = crypto.randomUUID();
-    await fs.writeFile(pdfPath(docId), buf);
+  if (!file) {
+    return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
   }
 
-  const originalHash = await sha256File(pdfPath(docId));
-  await DocumentModel.create({
+  const buf = Buffer.from(await file.arrayBuffer());
+  const fileName = file.name;
+  const docId = crypto.randomUUID();
+  const filePath = await saveOriginalPdf(docId, buf);
+
+  let originalHash;
+
+  if (process.env.NODE_ENV === "development") {
+    originalHash = await sha256File(pdfPath(docId));
+  } else {
+    originalHash = await sha256Buffer(buf);
+  }
+
+  const doc = await DocumentModel.create({
     docId,
     fileName,
-    filePath: pdfPath(docId),
+    filePath,
     pageCount: 1,
     originalHash,
   });

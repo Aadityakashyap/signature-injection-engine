@@ -140,7 +140,7 @@ const DraggableField = ({
                       autoResizeBox(val);
                       onChange({ ...box, meta: { ...box.meta, value: val } });
                     }}
-                    className="absolute inset-0 w-full h-full bg-transparent text-lg text-neutral-900 px-1 outline-none resize-none placeholder:text-neutral-900"
+                    className="resize-none drag-input"
                     placeholder="Enter text..."
                   />
                 );
@@ -155,7 +155,7 @@ const DraggableField = ({
                     autoResizeBox(val);
                     onChange({ ...box, meta: { ...box.meta, value: val } });
                   }}
-                  className="absolute inset-0 w-full h-full bg-transparent text-lg text-neutral-900 px-1 outline-none placeholder:text-neutral-900"
+                  className="drag-input"
                   placeholder="Enter text..."
                 />
               );

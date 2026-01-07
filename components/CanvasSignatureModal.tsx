@@ -71,13 +71,22 @@ const CanvasSignatureModal = ({
           onMouseLeave={end}
         />
         <div className="mt-3 flex gap-2">
-          <button className="rounded-lg border border-[#e179af] bg-[#da589b] text-sm font-medium text-white transition hover:bg-[#c82c7d] px-4 py-2" onClick={clear}>
+          <button
+            className="btn-full"
+            onClick={clear}
+          >
             Clear
           </button>
-          <button className="rounded-lg border border-green/80 bg-green/90 text-sm font-medium text-white transition hover:bg-green  px-4 py-2" onClick={done}>
+          <button
+            className="btn-full-success px-4 py-2"
+            onClick={done}
+          >
             Use Signature
           </button>
-          <button className="rounded-lg border border-[#e179af] bg-[#da589b] text-sm font-medium text-white transition hover:bg-[#c82c7d] px-4 py-2 ml-auto" onClick={onClose}>
+          <button
+            className="btn-full ml-auto"
+            onClick={onClose}
+          >
             Close
           </button>
         </div>

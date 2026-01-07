@@ -3,8 +3,8 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-main-accent border-t border-text-light">
-      <div className="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-4 gap-8 text-sm text-tag">
+    <footer className="bg-aaccent border-t border-light">
+      <div className="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-4 gap-8 text-sm text-border">
         <div>
           <h2 className="text-md font-bold uppercase text-white mb-3">
             Signature Injection Engine
@@ -29,7 +29,7 @@ const Footer = () => {
         </div>
 
         <div>
-          <h2 className="text-md font-semibold uppercase text-main-accent-text mb-3">
+          <h2 className="text-md font-semibold uppercase text-text mb-3">
             Products
           </h2>
           <ul className="space-y-2 text-white">
@@ -52,7 +52,7 @@ const Footer = () => {
         </div>
 
         <div>
-          <h2 className="text-md font-semibold uppercase text-main-accent-text mb-3">
+          <h2 className="text-md font-semibold uppercase text-text mb-3">
             Resources
           </h2>
           <ul className="space-y-2 text-white">
@@ -82,12 +82,12 @@ const Footer = () => {
         <div className="flex flex-col">
           <Link
             href="#"
-            className="inline-flex bg-white border border-white text-black px-4 py-2 rounded-lg hover:bg-transparent transition justify-center font-semibold hover:text-white"
+            className="inline-flex bg-white border border-white text-black px-4 py-2 rounded-[calc(var(--radius)/2)] hover:bg-transparent transition justify-center font-semibold hover:text-white"
           >
             Start Signature Your PDF Free
           </Link>
 
-          <div className="mt-4 flex gap-4 text-main-accent-text flex-col justify-between">
+          <div className="mt-4 flex gap-4 text-text flex-col justify-between">
             <Link href="#" className="hover:text-green">
               LinkedIn
             </Link>
@@ -101,8 +101,8 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="border-t border-tag mt-6">
-        <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between text-xs text-main-accent-text">
+      <div className="border-t border-border mt-6">
+        <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between text-xs text-text">
           <div className="flex items-center gap-3">
             <Link href="/">
               <Image

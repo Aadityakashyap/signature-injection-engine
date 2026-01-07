@@ -12,7 +12,7 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-text-light bg-main-accent shadow-sm">
+    <header className="sticky top-0 z-50 border-b border-light bg-aaccent shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link href="/" className="block">
@@ -41,20 +41,14 @@ const Header = () => {
               </svg>
             </button>
             {openMenu === "product" && (
-              <ul className="absolute top-full left-0 mt-2 bg-white border border-text-light rounded shadow-md w-40 z-10 text-logo">
+              <ul className="nav-list w-40">
                 <li>
-                  <Link
-                    href="#"
-                    className="block px-4 py-2 hover:bg-text-light"
-                  >
+                  <Link href="#" className="block px-4 py-2 hover:bg-light">
                     Features
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="#"
-                    className="block px-4 py-2 hover:bg-text-light"
-                  >
+                  <Link href="#" className="block px-4 py-2 hover:bg-light">
                     Integrations
                   </Link>
                 </li>
@@ -77,28 +71,19 @@ const Header = () => {
               </svg>
             </button>
             {openMenu === "resources" && (
-              <ul className="absolute top-full left-0 mt-2 bg-white border border-text-light rounded shadow-md w-48 z-10 text-logo">
+              <ul className="nav-list w-48">
                 <li>
-                  <Link
-                    href="#"
-                    className="block px-4 py-2 hover:bg-text-light"
-                  >
+                  <Link href="#" className="block px-4 py-2 hover:bg-light">
                     Blogs
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="#"
-                    className="block px-4 py-2 hover:bg-text-light"
-                  >
+                  <Link href="#" className="block px-4 py-2 hover:bg-light">
                     Case studies
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="#"
-                    className="block px-4 py-2 hover:bg-text-light"
-                  >
+                  <Link href="#" className="block px-4 py-2 hover:bg-light">
                     Success stories
                   </Link>
                 </li>
@@ -115,7 +100,7 @@ const Header = () => {
           <Link
             href="#"
             rel="noopener noreferrer"
-            className="px-4 py-2 flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-[#e179af] bg-[#da589b] text-sm font-medium text-white transition hover:bg-[#c82c7d]"
+            className="btn-full flex h-10 w-full items-center justify-center gap-2"
           >
             Signature Your PDF Free
           </Link>

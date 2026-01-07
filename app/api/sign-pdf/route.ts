@@ -2,7 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { DocumentModel } from "@/models/Document";
 import { Audit } from "@/models/Audit";
-import { ensureDirs, pdfPath, signedPath, publicUrlFor } from "@/lib/storage";
+import {
+  ensureDirs,
+  pdfPath,
+  publicUrlFor,
+  saveSignedPdf,
+  supabaseFileBuffer,
+} from "@/lib/storage";
 import { sha256File, sha256Buffer } from "@/lib/hash";
 import fs from "fs/promises";
 import { burnSignatureIntoPdf } from "@/lib/pdf";
@@ -31,18 +37,26 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({ error: "Doc not found" }, { status: 404 });
 
   const origPath = pdfPath(docId);
-  const origHash = await sha256File(origPath);
+  let origHash;
+  let originalBytes;
 
-  const originalBytes = await fs.readFile(origPath);
+  if (process.env.NODE_ENV === "development") {
+    origHash = await sha256File(pdfPath(docId));
+    originalBytes = await fs.readFile(origPath);
+  } else {
+    originalBytes = await supabaseFileBuffer(origPath);
+    origHash = await sha256Buffer(originalBytes);
+  }
+
   const signedBytes = await burnSignatureIntoPdf(
     Uint8Array.from(originalBytes),
     signatureDataUrl,
     placements
   );
 
-  const signedOutPath = signedPath(docId);
-  await fs.writeFile(signedOutPath, signedBytes);
   const finalHash = await sha256Buffer(signedBytes);
+  const signedKeyOrPath = await saveSignedPdf(docId, Buffer.from(signedBytes));
+  await Audit.findOneAndDelete({ docId });
 
   await Audit.create({
     docId,
@@ -52,6 +66,6 @@ export const POST = async (req: NextRequest) => {
     payloadSummary: { placementCount: placements.length },
   });
 
-  const signedUrl = publicUrlFor(signedOutPath);
+  const signedUrl = await publicUrlFor(signedKeyOrPath);
   return NextResponse.json({ signedUrl });
 };
