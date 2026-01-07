@@ -17,6 +17,7 @@ A full-stack Next.js prototype to place fields on a PDF responsively, then burn-
 - React-PDF / pdf.js
 - pdf-lib (server-side overlay)
 - MongoDB (Mongoose)
+- Supabase Storage
 
 ## Quick start (local)
 
@@ -29,6 +30,19 @@ A full-stack Next.js prototype to place fields on a PDF responsively, then burn-
    ```bash
    cp .env.local .env
    ```
+
+### Environment Variables
+
+```env
+MONGODB_URI="your monbodb url"
+BASE_URL=http://localhost:3000
+DATA_DIR=./data
+SUPABASE_URL="your supabase url"
+SUPABASE_ANON_KEY="your supabase anon key"
+SUPABASE_SERVICE_ROLE_KEY="your supabase service role key"
+NODE_ENV=development
+```
+
 4. Run the app:
 
    ```bash
@@ -56,3 +70,27 @@ A full-stack Next.js prototype to place fields on a PDF responsively, then burn-
 - Signature image is fitted inside the box:
   - `scale = min(boxW/imgW, boxH/imgH)`
   - centered with `drawX`, `drawY`.
+
+---
+
+## Supabase Setup
+
+1. Create a Supabase project at [https://supabase.com](https://supabase.com).
+2. In the Supabase dashboard:
+   - Go to Storage → Create bucket:
+     - `pdfs` (for original uploads)
+     - `signed` (for signed PDFs)
+   - Set bucket to public if you want direct file URLs.
+3. Copy your project settings:
+   - `NEXT_PUBLIC_SUPABASE_URL` (Project URL)
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` (Anon key)
+   - `SUPABASE_SERVICE_ROLE_KEY` (Service role key)
+
+---
+
+## Deploy to Vercel
+
+1. Push your repo to GitHub.
+2. Go to [Vercel](https://vercel.com) → Import Project.
+3. Select your repo, configure environment variables.
+4. Deploy.
